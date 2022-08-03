@@ -20,8 +20,10 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         window = UIWindow(frame: UIScreen.main.bounds)
         window?.windowScene = windowScene
         window?.makeKeyAndVisible()
-        
-        window?.rootViewController = LoadImageViewController()
+        let loadImageView = LoadImageViewController()
+        loadImageView.title = "SOME"
+        let navigationView = UINavigationController(rootViewController: loadImageView)
+        window?.rootViewController = navigationView
     }
 
     func sceneDidDisconnect(_ scene: UIScene) {
