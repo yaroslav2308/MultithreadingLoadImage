@@ -79,12 +79,12 @@ class LoadImageViewController: UIViewController {
 //                self.randomImageView.image = UIImage(data: data)
 //            }
 //        }
-        
+        //When you use URLSession it takes care about threads, so you do not need to do it by yourself
         guard let url = URL(string: "https://loremflickr.com/2000/2000") else { return }
         let session = URLSession(configuration: .default)
         let task = session.dataTask(with: url) { data, response, error in
             if error != nil {
-                print("HELLO", error)
+                print("HELLO", error?.localizedDescription)
                 return
             }
             if let safeData = data {
