@@ -71,14 +71,30 @@ class LoadImageViewController: UIViewController {
     // multithereading are usually used when you have some stuff that takes time(like request or complex algorithm or
     // you saving date to file etc)
     private func fetchImage() {
-        DispatchQueue.global(qos: .background).async {
-            let url = URL(string: "https://loremflickr.com/2000/2000")!
-            let data = try! Data(contentsOf: url)
-            
-            DispatchQueue.main.async {
-                self.randomImageView.image = UIImage(data: data)
+//        DispatchQueue.global(qos: .background).async {
+//            let url = URL(string: "https://loremflickr.com/2000/2000")!
+//            let data = try! Data(contentsOf: url)
+//
+//            DispatchQueue.main.async {
+//                self.randomImageView.image = UIImage(data: data)
+//            }
+//        }
+        
+        guard let url = URL(string: "https://loremflickr.com/2000/2000") else { return }
+        let session = URLSession(configuration: .default)
+        let task = session.dataTask(with: url) { data, response, error in
+            if error != nil {
+                print("HELLO", error)
+                return
             }
+            if let safeData = data {
+                DispatchQueue.main.async {
+                    self.randomImageView.image = UIImage(data: safeData)
+                }
+            }
+            
         }
+        task.resume()
     }
 
 
